@@ -85,7 +85,7 @@
         }
     }
     function dummy(data){
-        test(data.feature);
+        test(data.feature,data.color);
     }
     function floatingTooltip(tooltipID, width) {
         var tt = d3.select('body')

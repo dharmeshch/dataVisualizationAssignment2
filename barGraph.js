@@ -1,4 +1,4 @@
-function test(param1) {
+function test(param1, param2) {
     console.log(param1);
     // var svg = d3.select("svg"),
     //var margin = {top: 20, right: 20, bottom: 30, left: 50};
@@ -26,7 +26,8 @@ var y = d3.scaleLinear()
     .rangeRound([height, 0]);
 
 var z = d3.scaleOrdinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+    .range(["#7b6888",param2]);
+    // .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
 d3.csv(param1+".csv", function(d, i, columns) {
   for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
