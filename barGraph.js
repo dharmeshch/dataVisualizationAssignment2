@@ -9,12 +9,13 @@ function test(param1, param2, param3) {
     .append("svg")
     .attr("height", 600)
     .attr("width",width)
-    .attr("style","padding:25px")
+    //.attr("style","padding:25px")
     .append("g")
     .attr("transform", "translate(0,0)");
 var x0 = d3.scaleBand()
     .rangeRound([0, width-100])
-    .paddingInner(0.1);
+    .paddingInner(0.1)
+    .paddingOuter(0.6);
 
 var x1 = d3.scaleBand()
     .padding(0.05);
@@ -44,7 +45,7 @@ d3.csv("data/data.csv", function(d, i, columns) {
     .selectAll("g")
     .data(data)
     .enter().append("g")
-      .attr("transform", function(d) { return "translate(" + x0(d.Year) + ",0)"; })
+      .attr("transform", function(d) { return "translate(" + x0(d.Year)+",0)"; })
     .selectAll("rect")
     .data(function(d) { return keys.map(function(key) { return {key: key, value: d[key]}; }); })
     .enter().append("rect")
@@ -62,7 +63,8 @@ d3.csv("data/data.csv", function(d, i, columns) {
   svg.append("g")
       .attr("class", "axis")
       .call(d3.axisLeft(y).ticks(null, "s"))
-    .append("text")
+      .attr("transform", "translate(25,0)")
+      .append("text")
       .attr("x", 2)
       .attr("y", y(y.ticks().pop()) + 7)
       .attr("dy", "0.32em")
@@ -79,15 +81,15 @@ d3.csv("data/data.csv", function(d, i, columns) {
     .data(keys.slice().reverse())
     .enter().append("g")
       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-
+  
   legend.append("rect")
-      .attr("x", width - 40)
+      .attr("x", width - 50)
       .attr("width", 19)
       .attr("height", 19)
       .attr("fill", z);
 
   legend.append("text")
-      .attr("x", width - 40)
+      .attr("x", width - 50)
       .attr("y", 9.5)
       .attr("dy", "0.32em")
       .text(function(d) { return d; });
