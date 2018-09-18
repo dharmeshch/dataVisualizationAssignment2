@@ -14,13 +14,18 @@
 
     <link href="css/logo-nav.css" rel="stylesheet">
 
-    <link href="styling.css" rel="stylesheet">
     <style type="text/css">
+  
     #barChart {
             position: absolute;
-            top: 250px;
-            left: 600px;
+            top: 200px;
+            left: 650px;
             height: 600px;
+        }
+        #dropdown{
+          position: absolute;
+          top: 220px;
+          left:200px
         }
     </style>
   </head>
@@ -52,11 +57,20 @@
     </nav>
 
     <div id="container">
-      <h1 class="mt-5">Logo Nav by Start Bootstrap</h1>
+      <h1 class="mt-5">Australian Open Tennis Matches Statistics</h1>
       <p>The logo in the navbar is now a default Bootstrap feature in Bootstrap 4! Make sure to set the width and height of the logo within the HTML. For best results, it's recommended that you use an SVG image as your logo.
           The logo in the navbar is now a default Bootstrap feature in Bootstrap 4! Make sure to set the width and height of the logo within the HTML. For best results, it's recommended that you use an SVG image as your logo.
       </p>
-      <div id="bubbleChart" style="width:600px">
+      <select id = "dropdown" onChange=bubble(value)>
+        <option value="select">Select Player</option>
+        <option value = "RogerFederer">Roger Federer</option>
+        <option value = "RafealNadal">Rafeal Nadal</option>
+        <option value="NovakDjokovic">Novak Djokovic</option>
+        <option value = "AndyMurray">Andy Murray</option>
+        <option value="JoWilfriedTsonga">JoWilfried Tsonga</option>
+        <option value="AndyRoddick">Andy Roddick</option>
+      </select>
+      <div id="bubbleChart">
       </div>
       <div id="barChart" style="width:800px">
           
@@ -67,6 +81,7 @@
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="bubbleGraph.js"></script>
+    <script src="dataforBar.js"></script>
      <script src="barGraph.js"></script>
   </body>
 

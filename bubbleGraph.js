@@ -1,6 +1,22 @@
-(function(){
-    var width = 600;
-    var height = 600;
+function bubble(param1){
+
+    var chart = d3.select("#bubbleChart")
+    chart.selectAll("*").remove();
+    var datapath = '';
+    if(param1==undefined || param1 == "select"){
+        var barChart = d3.select("#barChart")
+        barChart.selectAll("*").remove();
+        datapath="data/data.csv";
+    }
+    else{
+        datapath="data/"+param1+".csv";
+        var barChart = d3.select("#barChart")
+        barChart.selectAll("*").remove();
+    }
+
+    console.log(datapath);
+    var width = 600; 
+    var height = 700;
     var bubbleFloatTip = floatingTooltip('bubble_chart_tooltip', 200);
     var svg = d3.select("#bubbleChart")
         .append("svg")
@@ -9,10 +25,10 @@
         .append("g")
         .attr("transform", "translate(0,0)");
     d3.queue()
-    .defer(d3.csv, "data.csv")
+    .defer(d3.csv, datapath)
     .await(ready)
 
-    var radiusScale = d3.scaleSqrt().domain([7.2,23.11]).range([25,125])
+    var radiusScale = d3.scaleSqrt().domain([7.2,23.11]).range([25,115])
 
     var color = d3.scaleOrdinal(d3.schemeCategory20c);
 
@@ -48,7 +64,7 @@
                 return radiusScale(d.aggregatevalue)
             })
             .style("fill",function(d){
-                return color(d.color)
+                return d.color
             })
             .on('mouseover',showData)
             .on('mouseout', hideData)
@@ -85,7 +101,8 @@
         }
     }
     function dummy(data){
-        test(data.feature,data.color);
+        console.log(data.feature);
+        test(data.feature,data.color,param1);
     }
     function floatingTooltip(tooltipID, width) {
         var tt = d3.select('body')
@@ -146,4 +163,5 @@
             updatePosition: updatePosition
         };
     }
-})();
+}
+bubble();

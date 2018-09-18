@@ -1,13 +1,10 @@
-function test(param1, param2) {
+function test(param1, param2, param3) {
+    if(param3==undefined || param3=="select")
+        param3 = "dataforBarChart";
     console.log(param1);
-    // var svg = d3.select("svg"),
-    //var margin = {top: 20, right: 20, bottom: 30, left: 50};
-    // width = +svg.attr("width") - margin.left - margin.right,
-    // height = +svg.attr("height") - margin.top - margin.bottom,
-    // g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     var barChart = d3.select("#barChart")
     barChart.selectAll("*").remove();
-    var width =700, height=550;
+    var width =600, height=550;
     var svg = d3.select("#barChart")
     .append("svg")
     .attr("height", 600)
@@ -29,23 +26,25 @@ var z = d3.scaleOrdinal()
     .range(["#7b6888",param2]);
     // .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
-d3.csv(param1+".csv", function(d, i, columns) {
+d3.csv("data/data.csv", function(d, i, columns) {
   for (var i = 1, n = columns.length; i < n; ++i) d[columns[i]] = +d[columns[i]];
   return d;
 }, function(error, data) {
   if (error) throw error;
+    console.log(param3);
+    data = dataObj[param3][param1];
+  //data = dataforBarChart[param1]
+  var keys = ['Winner', 'Loser'];
 
-  var keys = ['winner', 'loser'];
-
-  x0.domain(data.map(function(d) { return d.year; }));
+  x0.domain(data.map(function(d) { return d.Year; }));
   x1.domain(keys).rangeRound([0, x0.bandwidth()]);
-  y.domain([0, d3.max(data, function(d) { return d3.max([d.winner, d.loser]); })]).nice();
+  y.domain([0, d3.max(data, function(d) { return d3.max([d.Winner, d.Loser]); })]).nice();
 
   svg.append("g")
     .selectAll("g")
     .data(data)
     .enter().append("g")
-      .attr("transform", function(d) { return "translate(" + x0(d.year) + ",0)"; })
+      .attr("transform", function(d) { return "translate(" + x0(d.Year) + ",0)"; })
     .selectAll("rect")
     .data(function(d) { return keys.map(function(key) { return {key: key, value: d[key]}; }); })
     .enter().append("rect")
@@ -70,7 +69,7 @@ d3.csv(param1+".csv", function(d, i, columns) {
       .attr("fill", "#000")
       .attr("font-weight", "bold")
       .attr("text-anchor", "start")
-      .text("Population");
+      .text("Number of Matches");
 
   var legend = svg.append("g")
       .attr("font-family", "sans-serif")
